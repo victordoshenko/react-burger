@@ -1,16 +1,17 @@
 import React from "react";
-import StyleProductDetails from "./order-details.module.css";
+import StyleIngredientDetails from "./ingredient-details.module.css";
 import PropTypes from "prop-types";
 
-export const ProductDetails = ({product}) => {
+export const IngredientDetails = ({product}) => {
     return (
         <>
         <p className={`text text_type_main-large ml-10 mt-10`}>Детали ингридиента</p>
-        <div className={`${StyleProductDetails.description}`}>
+        <div className={`${StyleIngredientDetails.description}`}>
             <img className={`mr-4 ml-4`} src={product.image_large} alt="product"/>
             <h3 className={`text text_type_main-medium`}>{product.name}</h3>
 
-            <table className={`${StyleProductDetails.energyValue} mt-8 mb-15`}>
+            <table className={`${StyleIngredientDetails.energyValue} mt-8 mb-15`}>
+                <tbody>
                 <tr>
                     <th className="text text_type_main-default text_color_inactive">Калории,ккал</th>
                     <th className="text text_type_main-default text_color_inactive">Белки, г</th>
@@ -23,16 +24,17 @@ export const ProductDetails = ({product}) => {
                     <th className="text text_type_main-default text_color_inactive">{product.fat}</th>
                     <th className="text text_type_main-default text_color_inactive">{product.carbohydrates}</th>
                 </tr>
+                </tbody>
             </table>
         </div>
         </>
     )
 }
 
-   ProductDetails.propTypes = {
-        name: PropTypes.string.isRequired,
-        thumbnail: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
+IngredientDetails.propTypes = {
+        name: PropTypes.string,
+        thumbnail: PropTypes.string,
+        price: PropTypes.number,
         type: PropTypes.oneOf(["top" | "bottom" | undefined]),
         isLocked: PropTypes.oneOf([PropTypes.bool | undefined]),
         extraClass: PropTypes.oneOf([PropTypes.string | undefined]),

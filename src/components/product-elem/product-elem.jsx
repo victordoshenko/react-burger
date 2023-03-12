@@ -1,9 +1,8 @@
 import React, {useState} from "react";
-import PropTypes from "prop-types";
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import StyleIBurgerProducts from "./product-elem.module.css"
 import {Modal} from "../modal/modal";
-import {ProductDetails} from "../product-details/order-details";
+import {IngredientDetails} from "../ingredient-details/ingredient-details";
 
 export const ProductElem = ({ product }) => {
 
@@ -32,17 +31,10 @@ export const ProductElem = ({ product }) => {
                 </div>
                 {showModal && (
                     <Modal close={closeModal}>
-                        <ProductDetails product={product}/>
+                        <IngredientDetails product={product}/>
                     </Modal>)
                 }
 
             </div>
         );
     };
-
-ProductElem.propTypes = {
-        key: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-    }

@@ -22,8 +22,8 @@ export  const BurgerIngredientsHeader = () => {
         )
     }
     Tabs.propTypes = {
-        active: PropTypes.bool.isRequired,
-        value: PropTypes.string.isRequired,
+        active: PropTypes.bool,
+        value: PropTypes.string,
         onClick: PropTypes.func,
     }
 

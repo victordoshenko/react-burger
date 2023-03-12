@@ -5,7 +5,7 @@ import StyleElement from "./element-constructor.module.css"
 
 export const ElementConstructor = ({ingredients}) => {
 
-    const Element = ({ type, price, name, thumbnail}) => {
+    const ElementBuild = ({ type, price, name, thumbnail}) => {
         return (
             <div className={`${StyleElement.element}`}>
                 <ConstructorElement
@@ -20,9 +20,9 @@ export const ElementConstructor = ({ingredients}) => {
     }
 
     Element.propTypes = {
-        name: PropTypes.string.isRequired,
-        thumbnail: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
+        name: PropTypes.string,
+        thumbnail: PropTypes.string,
+        price: PropTypes.number,
         type: PropTypes.oneOf(["top" | "bottom" | undefined]),
         isLocked: PropTypes.oneOf([PropTypes.bool | undefined]),
         extraClass: PropTypes.oneOf([PropTypes.string | undefined]),
@@ -47,17 +47,17 @@ export const ElementConstructor = ({ingredients}) => {
         <>
             {
                 arrBun.map((ingredient) => (
-                    <Element type={"top"} price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image}/>
+                    <ElementBuild type="top" price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
             {
                 arrMain.map((ingredient) => (
-                    <Element price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image}/>
+                    <ElementBuild price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
             {
                 arrBun.map((ingredient) => (
-                    <Element type={"bottom"} price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image}/>
+                    <ElementBuild type="bottom" price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
         </>

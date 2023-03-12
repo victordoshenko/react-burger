@@ -21,7 +21,7 @@ export const BurgerIngredients = ({ products }) => {
             arrMain.push(product);
         }
         return product;
-    })
+    });
 
     return (
         <section className="BurgerIngredients">
@@ -30,21 +30,21 @@ export const BurgerIngredients = ({ products }) => {
                     <div className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Булки</div>
                     <div className={`${StyleIngredients.categories} mt-6`}>
                         {arrBun.map((product)=>(
-                            <ProductElem product={product}/>
+                            <ProductElem product={product} key={product._id}/>
                         ))}
                     </div>
 
                     <div className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Соусы</div>
                     <div className={`${StyleIngredients.categories} mt-6`}>
-                        {arrSauce.map((product)=>(
-                            <ProductElem product={product}/>
+                        {arrSauce.map((product, key)=>(
+                            <ProductElem product={product} key={product._id}/>
                         ))}
                     </div>
 
                     <div className={`${StyleIngredients.categoriesName} text text_type_main-medium mt-10`}>Начинки</div>
                     <div className={`${StyleIngredients.categories} mt-6`}>
-                        {arrMain.map((product)=>(
-                            <ProductElem product={product}/>
+                        {arrMain.map((product, key)=>(
+                            <ProductElem product={product} key={product._id}/>
                         ))}
                     </div>
             </div>
