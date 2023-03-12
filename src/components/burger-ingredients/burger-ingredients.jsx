@@ -1,8 +1,8 @@
 import React from "react";
 import StyleIngredients from "./burger-ingredients.module.css"
-import PropTypes from "prop-types";
 import {ProductElem} from "../product-elem/product-elem";
 import {BurgerIngredientsHeader} from "../burger-ingredients-header/burger-ingredients-header";
+import {ingredientType} from "../../utils/type";
 
 export const BurgerIngredients = ({ products }) => {
 
@@ -51,17 +51,7 @@ export const BurgerIngredients = ({ products }) => {
         </section>
     );
 }
+
 BurgerIngredients.propTypes = {
-    ingredients: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            type: PropTypes.string.isRequired,
-            proteins:PropTypes.number.isRequired,
-            fat: PropTypes.number.isRequired,
-            carbohydrates: PropTypes.number.isRequired,
-            calories: PropTypes.number.isRequired,
-            price: PropTypes.number.isRequired,
-            image: PropTypes.string.isRequired,
-        }))
+    ingredients: ingredientType
 };
