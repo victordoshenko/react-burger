@@ -9,13 +9,9 @@ const modalRoot = document.getElementById("react-modals");
 
 export const Modal = ({ close, children }) => {
 
-    const closeModal = () => {
-        close();
-        };
-
         function closeByEsc(evt) {
             if (evt.key === "Escape") {
-                closeModal();
+                close();
             }
         }
 
@@ -24,17 +20,17 @@ export const Modal = ({ close, children }) => {
             return () => {
                 document.removeEventListener("keydown", closeByEsc);
             };
-        }, []);
+        },[]);
 
         return ReactDOM.createPortal(
             <>
                 <div className={`${StyleModal.container}`}>
-                    <button className={`${StyleModal.btn}`} onClickCapture={closeModal}>
+                    <button className={`${StyleModal.btn}`} onClickCapture={close}>
                         <CloseIcon type="primary" />
                     </button>
                     {children}
                 </div>
-                <ModalOverlay close={closeModal} />
+                <ModalOverlay close={close} />
             </>,
             modalRoot
         );
