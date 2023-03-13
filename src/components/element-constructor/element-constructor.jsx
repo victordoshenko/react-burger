@@ -9,7 +9,7 @@ export const ElementConstructor = ({ingredients}) => {
             <div className={`${StyleElement.element}`}>
                 <ConstructorElement
                     type={type}
-                    isLocked={type === "bun" ? false : true}
+                    isLocked={type === "bun" ? true : false}
                     text={name}
                     price={price}
                     thumbnail={thumbnail}
@@ -22,9 +22,10 @@ export const ElementConstructor = ({ingredients}) => {
     const arrMain = [];
 
     ingredients.map((ingredient) => {
-        if (ingredient.type === "bun") {
+        if (ingredient.name === "Краторная булка N-200i") {
             arrBun.push(ingredient);
-        } else {
+        } 
+        if (ingredient.type === "sauce" || ingredient.type === "main") {
             arrMain.push(ingredient);
             arrMain.splice(3, 2);
         }
@@ -41,6 +42,11 @@ export const ElementConstructor = ({ingredients}) => {
             {
                 arrMain.map((ingredient) => (
                     <ElementBuild price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
+                ))
+            }
+            {
+                arrBun.map((ingredient) => (
+                    <ElementBuild type={ingredient.type} price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
         </>
