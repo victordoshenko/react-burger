@@ -28,7 +28,7 @@ export const ElementConstructor = ({ingredients}) => {
         } 
         if (ingredient.type === "sauce" || ingredient.type === "main") {
             arrMain.push(ingredient);
-            arrMain.splice(3, 2);
+            arrMain.splice(7, 2);
         }
         return ingredient;
     });
@@ -37,17 +37,19 @@ export const ElementConstructor = ({ingredients}) => {
         <>
             {
                 arrBun.map((ingredient) => (
-                    <ElementBuild type="top" price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
+                    <ElementBuild type="top" price={ingredient.price} name={ingredient.name + " (верх)"} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
+            <div className={StyleElement.basket}>
             {
                 arrMain.map((ingredient) => (
                     <ElementBuild price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
+            </div>
             {
                 arrBun.map((ingredient) => (
-                    <ElementBuild type="bottom" price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
+                    <ElementBuild type="bottom" price={ingredient.price} name={ingredient.name + " (низ)"} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
         </>

@@ -5,3 +5,17 @@
     align-items: center;
     justify-content: flex-end;
 }
+.basket {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-x: hidden;
+    max-height: 450px;
+}
+.basket::-webkit-scrollbar {
+    background: #8585AD;
+    width: 8px;
+}
+.basket::-webkit-scrollbar-thumb {
+    background: #2F2F37;
+}

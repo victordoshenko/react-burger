@@ -23,7 +23,7 @@ export const BurgerConstructor = ({ ingredients }) => {
 
     return (
         <section className={`StylesConstructor mt-25`}>
-            <div className={StylesConstructor.basket}>
+            <div>
                 <ElementConstructor ingredients={ingredients}/>
             </div>
             <div className={`${StylesConstructor.result} mt-10`}>
