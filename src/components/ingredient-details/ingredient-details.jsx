@@ -7,7 +7,7 @@ export const IngredientDetails = ({product}) => {
         <>
         <p className={`text text_type_main-large ml-10 mt-10`}>Детали ингридиента</p>
         <div className={`${StyleIngredientDetails.description}`}>
-            <img className={`mr-4 ml-4`} src={product.image_large} alt="product"/>
+            <img className={`mr-4 ml-4`} src={product.image_large} alt={product.name}/>
             <h3 className={`text text_type_main-medium`}>{product.name}</h3>
 
             <table className={`${StyleIngredientDetails.energyValue} mt-8 mb-15`}>

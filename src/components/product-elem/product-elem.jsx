@@ -22,7 +22,7 @@ export const ProductElem = ({ product }) => {
 
         return (
             <div className={`${StyleIBurgerProducts.product}`} onClick={openModal} key={product.id}>
-                <img className={`mr-4 ml-4`} src={product.image} alt="product"/>
+                <img className={`mr-4 ml-4`} src={product.image} alt={product.name}/>
                 <Counter count={0} size="default" extraClass="m-1"/>
                 <h3 className={`${StyleIBurgerProducts.productName} text text_type_main-default`}>{product.name}</h3>
                 <div className={`${StyleIBurgerProducts.productPrice} mt-1 mb-1`}>
