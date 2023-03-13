@@ -1,4 +1,4 @@
-import {ConstructorElement} from "@ya.praktikum/react-developer-burger-ui-components";
+import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import React from "react";
 import StyleElement from "./element-constructor.module.css"
 
@@ -6,10 +6,11 @@ export const ElementConstructor = ({ingredients}) => {
 
     const ElementBuild = ({ type, price, name, thumbnail}) => {
         return (
-            <div className={`${StyleElement.element}`}>
+            <div className={`${StyleElement.element}`}>                
+                {type === "top" || type === "bottom" ? "" : <DragIcon type="primary" />}
                 <ConstructorElement
                     type={type}
-                    isLocked={type === "bun" ? true : false}
+                    isLocked={type === "top" || type === "bottom" ? true : false}
                     text={name}
                     price={price}
                     thumbnail={thumbnail}
@@ -36,7 +37,7 @@ export const ElementConstructor = ({ingredients}) => {
         <>
             {
                 arrBun.map((ingredient) => (
-                    <ElementBuild type={ingredient.type} price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
+                    <ElementBuild type="top" price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
             {
@@ -46,7 +47,7 @@ export const ElementConstructor = ({ingredients}) => {
             }
             {
                 arrBun.map((ingredient) => (
-                    <ElementBuild type={ingredient.type} price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
+                    <ElementBuild type="bottom" price={ingredient.price} name={ingredient.name} thumbnail={ingredient.image} key={ingredient._id}/>
                 ))
             }
         </>
