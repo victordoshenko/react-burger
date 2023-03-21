@@ -1,37 +1,27 @@
 .header {
-    display: flex;
-    align-content: center;
-    justify-content: center;
-}
-.headerSection {
-    display: flex;
+    background: #1C1C21;
+    box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
 }
 
-.btn {
-    border: 1px dashed #4C4CFF;
-    border-radius: 40px;
-    background-color: transparent;
-    color: #8585AD;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+.header_inner{
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
-    gap: 8px;
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: center;
-    text-decoration: none;
+    justify-items: left;
 }
-.btnConstructor {
-    width: 178px;
-    height: 56px;
+
+.nav {
+    display:flex;
+    align-items: center;
+    justify-content: flex-start;
 }
-.btnOrder {
-    width: 197px;
-    height: 56px;
+
+.logoWrap {
+    place-self: center;
 }
-.btnAccount {
-    width: 207px;
-    height: 56px;
-    margin-left: 200px;
+
+.rightNav {
+    place-self: end;
 }
