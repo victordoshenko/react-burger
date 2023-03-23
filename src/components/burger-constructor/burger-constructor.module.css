@@ -1,24 +1,25 @@
-.result {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end
-}
-.basket {
+.constructorList {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    overflow-x: hidden;
-    max-height: 450px;
-}
-.totalAmount {
-    display: flex;
-    align-items: center;
+    gap: 16px;
+    max-height: 464px;
+    overflow-y: scroll;
 }
 
-.basket::-webkit-scrollbar {
-    background: #8585AD;
+.constructorList::-webkit-scrollbar {
     width: 8px;
 }
-.basket::-webkit-scrollbar-thumb {
+
+.constructorList::-webkit-scrollbar-track {
     background: #2F2F37;
 }
+
+.constructorList::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+}
+
+.constructorList::-webkit-scrollbar-thumb:hover {
+    border: 3px solid #9696c1
+}
+
