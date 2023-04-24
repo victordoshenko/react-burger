@@ -133,7 +133,7 @@ export const updateUser = (data) => {
         catch(err) {
             dispatch({ type: USER_PATCH_FAILED });
 
-            //важно
+           
             throw 'patch user err';
         }
     }

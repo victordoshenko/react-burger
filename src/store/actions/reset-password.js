@@ -19,6 +19,7 @@ export const fetchForgotPassword = (email) => {
         catch(e) {
             dispatch({ type: FORGOT_PASSWORD_FAILED })
 
+           
             throw 'forgot password error'
         }
     }
@@ -36,6 +37,7 @@ export const fetchResetPassword = (data) => {
         catch(e) {
             dispatch({ type: RESET_PASSWORD_FAILED });
 
+           
             throw 'reset password error'
         }
 
