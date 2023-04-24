@@ -36,6 +36,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
             const indexFrom = action.payload.from;
             const indexTo = action.payload.to;
 
+           
             sortedFillingIngredients.splice(indexFrom, 1)
             sortedFillingIngredients.splice(indexTo, 0, prevFillingIngredients[indexFrom])
 

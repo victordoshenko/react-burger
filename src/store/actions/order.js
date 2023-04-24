@@ -18,6 +18,7 @@ export const makeOrderRequest = (ingredientIds) => {
         catch {
             dispatch({ type: MAKE_ORDER_FAILED })
             
+           
             throw new Error('make order error')
         }
     }
