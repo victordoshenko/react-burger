@@ -47,9 +47,6 @@ export const fetchForgotPassword: AppThunk = (email: string) => {
         }
         catch(e) {
             dispatch({ type: FORGOT_PASSWORD_FAILED })
-
-            
-            throw 'forgot password error'
         }
     }
 }
@@ -65,9 +62,6 @@ export const fetchResetPassword: AppThunk = (data: TResetPasswordForm) => {
         }
         catch(e) {
             dispatch({ type: RESET_PASSWORD_FAILED });
-
-            
-            throw 'reset password error'
         }
     }
 }

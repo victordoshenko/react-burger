@@ -49,7 +49,7 @@ const BurgerConstructor: FC = () => {
             
             <div className={`${styles.constructorList} mt-4 mb-4 pr-2`}>
                 {fillingIngredients.length > 0
-                    ? fillingIngredients.map((el: TConstructorIngredient, index: number) => {
+                    ? fillingIngredients.map((el, index) => {
                         return <ConstructorItem
                             key={el.uuid}
                             ingredientData={el}

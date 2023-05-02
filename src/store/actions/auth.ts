@@ -174,7 +174,6 @@ export const fetchLogout: AppThunk = () => {
         }
         catch {
             dispatch({ type: LOGOUT_FAILED });
-            throw 'logout fetch error';
         }
     }
 }
@@ -214,9 +213,6 @@ export const updateUser: AppThunk = (data: TUserUpdateData) => {
         }
         catch(err) {
             dispatch({ type: USER_PATCH_FAILED });
-
-            
-            throw 'patch user err';
         }
     }
 }

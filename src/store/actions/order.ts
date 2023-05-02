@@ -37,9 +37,6 @@ export const makeOrderRequest: AppThunk = (ingredientIds: string[]) => {
         }
         catch {
             dispatch({ type: MAKE_ORDER_FAILED })
-            
-            
-            throw new Error('make order error')
         }
     }
 }
