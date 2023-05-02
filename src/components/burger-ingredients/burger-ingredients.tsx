@@ -2,12 +2,11 @@ import react, { FC, RefObject, useEffect, useMemo, useRef } from 'react'
 import styles from './burger-ingredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
-import { useDispatch, useSelector } from 'react-redux';
 import { useInView } from 'react-intersection-observer';
-import { SET_BROWSED_CATEGORY } from '../../store/actions/ingredient-detail';
 import { burgerConstructorSelector, ingredientsSelector, ingredientDetailSelector } from '../../store/selectors';
-import { Dispatch } from 'redux';
 import { TIngredient } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../hooks/store';
+import { SET_BROWSED_CATEGORY } from '../../store/actions/actionTypes';
 type TUseInViewParams = {
     threshold: number;
 }
@@ -21,20 +20,20 @@ type TCounters = {
     [key:string]: number;
 };
 const BurgerIngredients: FC = () => {
-    const { ingredients } = useSelector(ingredientsSelector);
-    const burgerConstructor = useSelector(burgerConstructorSelector);
-    const { browsedCategory } = useSelector(ingredientDetailSelector)
-    const dispatch: Dispatch<any> = useDispatch();
-    const useInViewParams: TUseInViewParams = { threshold: 0.2 };
+    const { ingredients } = useAppSelector(ingredientsSelector);
+    const burgerConstructor = useAppSelector(burgerConstructorSelector);
+    const { browsedCategory } = useAppSelector(ingredientDetailSelector)
+    const dispatch = useAppDispatch();
+    const useInViewParams: TUseInViewParams = { threshold: 0.2 }; 
     const [ ref1, inView1, entry1 ] = useInView(useInViewParams);
     const [ ref2, inView2, entry2 ] = useInView(useInViewParams);
     const [ ref3, inView3, entry3 ] = useInView(useInViewParams);
-    const refBun = useRef<HTMLHeadingElement>(null);
-    const refSauce = useRef<HTMLHeadingElement>(null);
-    const refMain = useRef<HTMLHeadingElement>(null);
-    const refIngredientsBox = useRef<HTMLDivElement>(null);
+    const refBun = useRef<HTMLHeadingElement>(null); 
+    const refSauce = useRef<HTMLHeadingElement>(null); 
+    const refMain = useRef<HTMLHeadingElement>(null); 
+    const refIngredientsBox = useRef<HTMLDivElement>(null); 
     useEffect( () => {
-       
+        
         if (inView1) {
             dispatch({ type: SET_BROWSED_CATEGORY, payload: 'bun'})
         } else if(inView2){
@@ -46,7 +45,7 @@ const BurgerIngredients: FC = () => {
     const onTabClick = (ref: RefObject<HTMLHeadingElement>) => {
         if (ref.current) {
             if (refIngredientsBox.current){
-                refIngredientsBox.current.scrollTop = ref.current.offsetTop;
+                refIngredientsBox.current.scrollTop = ref.current.offsetTop; 
             }
         }
     }

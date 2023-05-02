@@ -4,18 +4,19 @@ import ConstructorItemFixed from '../constructor-item-fixed/constructor-item-fix
 import ConstructorItem from '../constructor-item/constructor-item'
 import TotalPanel from '../total-panel/total-panel'
 import ConstructorItemEmpty from '../constructor-item-empty/constructor-item-empty'
-import { useDispatch, useSelector } from 'react-redux'
 import { addToConstructor } from '../../store/actions/burger-constructor'
 import { useDrop } from 'react-dnd'
 import { getTotalBurgerPrice } from '../../utils/functions-helper'
 import { burgerConstructorSelector } from '../../store/selectors'
-import { Dispatch } from 'redux'
 import { ConstructorItemEmptyTypes, ConstructorItemFixedTypes, TConstructorIngredient, TIngredient } from '../../types'
+import { useAppDispatch, useAppSelector } from '../../hooks/store'
 
 const BurgerConstructor: FC = () => {
-    const { bun, fillingIngredients } = useSelector(burgerConstructorSelector);
-    const dispatch: Dispatch<any> = useDispatch();
-    const [emptyBurgerHoverType, setEmptyBurgerHoverType] = useState<string>('')
+    const { bun, fillingIngredients } = useAppSelector(burgerConstructorSelector);
+    const dispatch = useAppDispatch();
+
+    const [emptyBurgerHoverType, setEmptyBurgerHoverType] = useState<string>('');
+
     const [ , dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item: TIngredient) {
@@ -26,12 +27,15 @@ const BurgerConstructor: FC = () => {
             handleDragHover(item)
         },
     })
+
     const handleDragHover = (item: TIngredient) => {
         setEmptyBurgerHoverType(item.type)
     }
+
     const totalPrice = useMemo(()=> {
         return getTotalBurgerPrice(bun, fillingIngredients);
      }, [bun, fillingIngredients]);
+
     return (
         <section className={'pl-4'} ref={dropTarget}>
             {bun
@@ -42,6 +46,7 @@ const BurgerConstructor: FC = () => {
                     cute={emptyBurgerHoverType === 'bun'}
                 />
             }
+            
             <div className={`${styles.constructorList} mt-4 mb-4 pr-2`}>
                 {fillingIngredients.length > 0
                     ? fillingIngredients.map((el: TConstructorIngredient, index: number) => {
@@ -58,6 +63,7 @@ const BurgerConstructor: FC = () => {
                     />
                 }
             </div>
+
             {bun
                 ? <ConstructorItemFixed ingredientData={bun} type={ConstructorItemFixedTypes.Bottom}/>
                 : <ConstructorItemEmpty
@@ -66,8 +72,10 @@ const BurgerConstructor: FC = () => {
                     cute={emptyBurgerHoverType === 'bun'}
                 />
             }
+
             <TotalPanel price={totalPrice}/>
         </section>
     )
 }
+
 export default BurgerConstructor

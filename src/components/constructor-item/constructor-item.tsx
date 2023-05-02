@@ -1,11 +1,12 @@
 import { FC, useRef } from 'react'
 import styles from './constructor-item.module.css'
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch } from 'react-redux';
-import { MOVE_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM } from '../../store/actions/burger-constructor';
+
 import { useDrag, useDrop, XYCoord } from 'react-dnd';
 import { TConstructorIngredient } from '../../types';
 import { Identifier } from 'typescript';
+import { MOVE_CONSTRUCTOR_ITEM, REMOVE_CONSTRUCTOR_ITEM } from '../../store/actions/actionTypes';
+import { useAppDispatch } from '../../hooks/store';
 
 type ConstructorItemProps = {
     ingredientData: TConstructorIngredient;
@@ -18,7 +19,7 @@ type DragItem = {
 };
 
 const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const ref = useRef<HTMLDivElement>(null)
     const [{isDragging}, dragRef] = useDrag({
@@ -27,11 +28,11 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) =>
             id: ingredientData.uuid,
             index,
         },
-        collect:(monitor: any )=> ({
+        collect: monitor => ({
             isDragging: monitor.isDragging(),
         }),
     });
-    const [{handlerId}, dropRef] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
+    const [{handlerId}, dropRef] = useDrop<DragItem, void, { handlerId: Identifier | null }>({ 
         accept: 'addedIngredient',
         collect(monitor: any) {
             return {
@@ -45,36 +46,36 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) =>
             const dragIndex = item.index
             const hoverIndex = index
 
-           
+            
             if (dragIndex === hoverIndex) {
                 return
             }
 
-           
+            
             const hoverBoundingRect = ref.current?.getBoundingClientRect()
 
-           
+            
             const hoverMiddleY =
             (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
 
-           
+            
             const clientOffset = monitor.getClientOffset()
 
-           
+            
             const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
 
-           
-           
-           
-           
+            
+            
+            
+            
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return
             }
-           
+            
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
                 return
             }
-           
+            
             dispatch({ 
                 type: MOVE_CONSTRUCTOR_ITEM,
                 payload: { 
@@ -83,10 +84,10 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) =>
                 },
             })
 
-           
-           
-           
-           
+            
+            
+            
+            
             item.index = hoverIndex
         }
     });
