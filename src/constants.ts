@@ -1,4 +1,7 @@
-export const BURGER_API_URL = 'https://norma.nomoreparties.space/api';
+import { OrderStatusTypes, TOrderData } from "./types";
+
+export const BASE_URL = 'norma.nomoreparties.space'
+export const BURGER_API_URL = `https://${BASE_URL}/api`;
 
 export const ENDPOINT_INGREDIENTS = '/ingredients'
 export const ENDPOINT_MAKE_ORDER = '/orders'
@@ -9,3 +12,15 @@ export const ENDPOINT_PASSWORD_RESET = '/password-reset/reset'
 export const ENDPOINT_USER = '/auth/user'
 export const ENDPOINT_LOGOUT = '/auth/logout'
 export const ENDPOINT_TOKEN_REFRESH = '/auth/token'
+export const ENDPOINT_ORDER = '/orders'
+
+export const WS_BASE = `wss://${BASE_URL}`
+export const WS_ORDERS_FEED = `${WS_BASE}/orders/all`
+export const WS_ORDERS_HISTORY = `${WS_BASE}/orders`
+
+export const ORDER_DONE_STATUS = 'Выполнен';
+export const ORDER_PENDING_STATUS = 'Готовится';
+export const ORDER_CREATED_STATUS = 'Создан';
+
+export const ORDER_NUMBERS_LIST_MAX_COUNT = 10;
+export const VIEWED_INGREDIENTS_MAX_NUM = 6; 

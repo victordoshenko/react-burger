@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react"
-import { useSelector } from "react-redux";
+import { useAppSelector } from '../hooks/store';
 import { useParams } from "react-router-dom";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import { ingredientsSelector } from "../store/selectors";
@@ -8,13 +8,13 @@ import styles from './ingredient-detail.module.css'
 import { TIngredient } from "../types";
 
 export const IngredientDetailPage: FC = () => {
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(ingredientsSelector);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useAppSelector(ingredientsSelector);
     const {id: ingredientId} = useParams();
-    let ingredient: TIngredient | null = ingredients.length ? ingredients.find((el: TIngredient ) => el._id === ingredientId) : null;
+    let ingredient = ingredients.length ? ingredients.find((el: TIngredient ) => el._id === ingredientId) : null;
     const [ingredientExists, setIngredientExists] = useState<boolean>(true)
 
     useEffect(() => {
-       
+        
         if (!ingredientsFailed && !ingredientsRequest && !ingredient && ingredient !== null) {
             setIngredientExists(false)
         }

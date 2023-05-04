@@ -1,5 +1,5 @@
-import { BURGER_API_URL, ENDPOINT_INGREDIENTS, ENDPOINT_LOGIN, ENDPOINT_LOGOUT, ENDPOINT_MAKE_ORDER, ENDPOINT_PASSWORD_FORGOT, ENDPOINT_PASSWORD_RESET, ENDPOINT_REGISTER, ENDPOINT_TOKEN_REFRESH, ENDPOINT_USER } from '../constants'
-import { TIngredient, TUserUpdateData } from '../types';
+import { BURGER_API_URL, ENDPOINT_INGREDIENTS, ENDPOINT_LOGIN, ENDPOINT_LOGOUT, ENDPOINT_MAKE_ORDER, ENDPOINT_ORDER, ENDPOINT_PASSWORD_FORGOT, ENDPOINT_PASSWORD_RESET, ENDPOINT_REGISTER, ENDPOINT_TOKEN_REFRESH, ENDPOINT_USER } from '../constants'
+import { TIngredient, TLoginForm, TOrderData, TRegisterForm, TResetPasswordForm, TUserUpdateData } from '../types';
 import { getCookie, saveTokens } from './functions-helper';
 
 type TServerResponse<T> = {
@@ -10,7 +10,7 @@ type TIngredientsResponse = TServerResponse<{
     data: TIngredient[]
 }>
 
-type TOrderResponse = TServerResponse<{
+type TMakeOrderResponse = TServerResponse<{
     name: string;
     order: {
         number: number;
@@ -59,38 +59,27 @@ type TLogoutResponse = TServerResponse<{
     message: string
 }>
 
+type TGetOrderResponse = TServerResponse<{
+    orders: TOrderData[];
+}>
+
 type TErrorResponse = TServerResponse<{
     message: string
 }>
 
-
-type TResetPasswordForm = {
-    password: string;
-    emailCode: string;
-}
-
-type TRegisterForm = {
-    password: string;
-    email: string;
-    name: string;
-}
-
-type TLoginForm = {
-    password: string;
-    email: string;
-}
 
 const checkReponse = async <T>(res: Response): Promise<T> => {
     if (!res.ok) throw `Ошибка ${res.status}`
     return await res.json()
 };
 
-const checkSuccess = <T>(res: any): T => {
+const checkSuccess = <T>(res: any): T => { 
     if (res && res.success) {
         return res;
     }
     throw 'Ответ не success'
 }
+
 
 const request = async <T>(endpoint: RequestInfo, options?: RequestInit): Promise<T> => {
     const fetchData = await fetch(`${BURGER_API_URL}${endpoint}`, options)
@@ -98,18 +87,19 @@ const request = async <T>(endpoint: RequestInfo, options?: RequestInit): Promise
     return checkSuccess<T>(response)
 }
 
+
 export async function getIngredients(): Promise<TIngredientsResponse> {
     return await request<TIngredientsResponse>(ENDPOINT_INGREDIENTS)
 }
 
 export const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit) => {
     try {
-       
+        
         return await request<T>(url, options);
     } catch (err) {
         if ((err as TErrorResponse).message === "jwt expired") {
             let authToken;
-            const refreshData = await refreshTokenRequest();
+            const refreshData = await refreshTokenRequest(); 
 
             authToken = refreshData.accessToken.split('Bearer ')[1];
             if (authToken) {
@@ -121,24 +111,27 @@ export const fetchWithRefresh = async <T>(url: RequestInfo, options: RequestInit
                   refreshData.accessToken;
             }
 
-            return await request<T>(url, options);
+            return await request<T>(url, options); 
         } else {
             throw 'refresh token err'
         }
     }
   };
 
-export const makeOrder = async (ingredientIds: string[]): Promise<TOrderResponse> => {
-    return await request<TOrderResponse>(ENDPOINT_MAKE_ORDER, {
+
+export const makeOrder = async (ingredientIds: string[]): Promise<TMakeOrderResponse> => {
+    return await fetchWithRefresh<TMakeOrderResponse>(ENDPOINT_MAKE_ORDER, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8',
+            Authorization: 'Bearer ' + getCookie('accessToken')
         },
         body: JSON.stringify({
             ingredients: ingredientIds
         })
     })
 }
+
 
 export const forgotPasswordRequest = async (email: string): Promise<TForgotPasswordResponse> => {
     return await request<TForgotPasswordResponse>(ENDPOINT_PASSWORD_FORGOT, {
@@ -151,6 +144,7 @@ export const forgotPasswordRequest = async (email: string): Promise<TForgotPassw
         })
     })
 }
+
 
 
 export const resetPasswordRequest = async ({ password, emailCode: token}: TResetPasswordForm): Promise<TResetPasswordResponse> => {
@@ -167,6 +161,7 @@ export const resetPasswordRequest = async ({ password, emailCode: token}: TReset
 }
 
 
+
 export const registerRequest = async ({ email, password, name }: TRegisterForm): Promise <TRegisterResponse> => {
     return await request<TRegisterResponse>(ENDPOINT_REGISTER, {
         method: 'POST',
@@ -181,6 +176,7 @@ export const registerRequest = async ({ email, password, name }: TRegisterForm):
     })
 }
 
+
 export const loginRequest = async ({ email, password }: TLoginForm): Promise<TLoginResponse> => {
     return await request<TLoginResponse>(ENDPOINT_LOGIN, {
         method: 'POST',
@@ -194,6 +190,7 @@ export const loginRequest = async ({ email, password }: TLoginForm): Promise<TLo
     })
 }
 
+
 export const getUserRequest = async () => {
     return await fetchWithRefresh<TUserResponse>(ENDPOINT_USER, {
         method: 'GET',
@@ -203,6 +200,7 @@ export const getUserRequest = async () => {
         }
     })
 }
+
 
 export const updateUserRequest = async (data: TUserUpdateData): Promise<TUserResponse> => {
     return await request<TUserResponse>(ENDPOINT_USER, {
@@ -217,6 +215,7 @@ export const updateUserRequest = async (data: TUserUpdateData): Promise<TUserRes
     })
 }
 
+
 export const refreshTokenRequest = async (): Promise<TRefreshResponse> => {
     return await request<TRefreshResponse>(ENDPOINT_TOKEN_REFRESH, {
         method: 'POST',
@@ -229,6 +228,19 @@ export const refreshTokenRequest = async (): Promise<TRefreshResponse> => {
     })
 }
 
+
+export const refreshTokens = async(): Promise<void> => {
+    const refreshData = await refreshTokenRequest();
+    let authToken;
+    authToken = refreshData.accessToken.split('Bearer ')[1];
+    if (authToken) {
+        saveTokens(authToken, refreshData.refreshToken)
+    } else {
+        throw 'refresh tokens error'
+    }
+}
+
+
 export const logoutRequest = async (): Promise<TLogoutResponse> => {
     return await request<TLogoutResponse>(ENDPOINT_LOGOUT, {
         method: 'POST',
@@ -238,5 +250,15 @@ export const logoutRequest = async (): Promise<TLogoutResponse> => {
         body: JSON.stringify({
             'token': localStorage.getItem('refreshToken')
         })
+    })
+}
+
+
+export const getOrderRequest = async (orderNumber: number): Promise<TGetOrderResponse> => {
+    return await request<TGetOrderResponse>(`${ENDPOINT_ORDER}/${orderNumber}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        }
     })
 }
