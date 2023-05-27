@@ -49,9 +49,9 @@ const BurgerIngredients: FC = () => {
             }
         }
     }
-    const bunData = useMemo(() => ingredients.filter(el => el.type === 'bun'), [ingredients]);
-    const sauceData = useMemo(() => ingredients.filter(el => el.type === 'sauce'), [ingredients]);
-    const mainData = useMemo(() => ingredients.filter(el => el.type === 'main'), [ingredients]);
+    const bunData = useMemo(() => ingredients.filter((el: TIngredient) => el.type === 'bun'), [ingredients]);
+    const sauceData = useMemo(() => ingredients.filter((el: TIngredient) => el.type === 'sauce'), [ingredients]);
+    const mainData = useMemo(() => ingredients.filter((el: TIngredient) => el.type === 'main'), [ingredients]);
     const ingredientsByCategory: TIngredientsByCategory[] = []
     bunData.length && ingredientsByCategory.push({
         title: 'Булки',

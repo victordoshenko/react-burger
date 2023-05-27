@@ -18,19 +18,12 @@ export const ProtectedRoute = ({ onlyUnAuth = false, children}: PropsWithChildre
     }
 
     if (onlyUnAuth && user.isLogged) { 
-        
         return <Navigate to={location.state?.from || '/'} replace/>
-        
-        
-        
-        
-        
     }
 
     if (!onlyUnAuth && !user.isLogged) { 
         return <Navigate to="/login" state={{ from: location }} replace/>
     }
-
     
     return (
         <>

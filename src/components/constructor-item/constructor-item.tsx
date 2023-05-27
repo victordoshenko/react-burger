@@ -28,7 +28,7 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) =>
             id: ingredientData.uuid,
             index,
         },
-        collect: monitor => ({
+        collect:(monitor: any )=> ({
             isDragging: monitor.isDragging(),
         }),
     });
@@ -45,28 +45,16 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) =>
             }
             const dragIndex = item.index
             const hoverIndex = index
-
             
             if (dragIndex === hoverIndex) {
                 return
             }
-
             
-            const hoverBoundingRect = ref.current?.getBoundingClientRect()
-
-            
+            const hoverBoundingRect = ref.current?.getBoundingClientRect()            
             const hoverMiddleY =
-            (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-
-            
-            const clientOffset = monitor.getClientOffset()
-
-            
+            (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2            
+            const clientOffset = monitor.getClientOffset()            
             const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
-
-            
-            
-            
             
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
                 return
@@ -84,10 +72,6 @@ const ConstructorItem: FC<ConstructorItemProps> = ({ ingredientData, index }) =>
                 },
             })
 
-            
-            
-            
-            
             item.index = hoverIndex
         }
     });
