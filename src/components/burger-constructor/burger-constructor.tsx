@@ -37,7 +37,7 @@ const BurgerConstructor: FC = () => {
      }, [bun, fillingIngredients]);
 
     return (
-        <section className={'pl-4'} ref={dropTarget}>
+        <section className={'pl-4'} ref={dropTarget} data-testid='burger-constructor'>
             {bun
                 ? <ConstructorItemFixed ingredientData={bun} type={ConstructorItemFixedTypes.Top}/>
                 : <ConstructorItemEmpty
@@ -49,7 +49,7 @@ const BurgerConstructor: FC = () => {
             
             <div className={`${styles.constructorList} mt-4 mb-4 pr-2`}>
                 {fillingIngredients.length > 0
-                    ? fillingIngredients.map((el, index) => {
+                    ? fillingIngredients.map((el: TConstructorIngredient, index: number) => {
                         return <ConstructorItem
                             key={el.uuid}
                             ingredientData={el}
